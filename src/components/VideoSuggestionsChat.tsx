@@ -35,21 +35,30 @@ export function VideoSuggestionsChat() {
 
   const extractVideoIds = (text: string): string[] => {
     const videoIds: string[] = [];
-    const lowerText = text.toLowerCase();
+    // Remove markdown formatting and normalize text
+    const cleanText = text.toLowerCase()
+      .replace(/\*\*/g, '') // Remove bold markdown
+      .replace(/\*/g, '')   // Remove italic markdown
+      .replace(/\[|\]/g, '') // Remove brackets
+      .replace(/\(.*?\)/g, ''); // Remove content in parentheses like (5min)
+    
+    console.log('Extracting videos from text:', cleanText);
     
     // Sort videos by name length (longest first) to match more specific names first
     const sortedVideos = [...videos].sort((a, b) => b.name.length - a.name.length);
     
     sortedVideos.forEach(video => {
       const videoNameLower = video.name.toLowerCase();
-      // Check if the video name appears in the text (with word boundaries for better matching)
-      if (lowerText.includes(videoNameLower)) {
+      // Check if the video name appears in the cleaned text
+      if (cleanText.includes(videoNameLower)) {
         if (!videoIds.includes(video.id)) {
+          console.log('Found video match:', video.name);
           videoIds.push(video.id);
         }
       }
     });
     
+    console.log('Extracted video IDs:', videoIds);
     return videoIds;
   };
 
