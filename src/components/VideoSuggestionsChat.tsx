@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Send, Loader2, Sparkles } from "lucide-react";
-import { VideoCard } from "./VideoCard";
+import { VideoCardCompact } from "./VideoCardCompact";
 import { VideoPlayer } from "./VideoPlayer";
 import { videos, type Video } from "@/lib/videoData";
 
@@ -192,7 +192,7 @@ export function VideoSuggestionsChat() {
             <div className="mt-3 space-y-2">
               {suggestedVideos.map((video) => (
                 <div key={video.id} className="animate-fade-in">
-                  <VideoCard
+                  <VideoCardCompact
                     video={video}
                     onPlay={(v) => {
                       setSelectedVideo(v);
