@@ -13,6 +13,7 @@ export function Header() {
     { to: "/", label: "Home" },
     { to: "/quiz", label: "Take Quiz" },
     { to: "/browse", label: "Choose Your Moves" },
+    { to: "/chat", label: "AI Assistant" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
   ];
