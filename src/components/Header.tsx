@@ -12,7 +12,7 @@ export function Header() {
   const navLinks = [
     { to: "/", label: "Home" },
     { to: "/quiz", label: "Take Quiz" },
-    { to: "/browse", label: "Browse Videos" },
+    { to: "/browse", label: "Choose Your Moves" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
   ];

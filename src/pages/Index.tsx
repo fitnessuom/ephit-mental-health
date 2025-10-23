@@ -12,30 +12,45 @@ export default function Index() {
       
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background py-20 md:py-32">
+        <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 via-background to-background py-12 md:py-16">
           <div className="container relative z-10">
-            <div className="mx-auto max-w-3xl text-center animate-fade-up">
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-                Empower Your Mind & Body Through{" "}
-                <span className="text-primary">Movement</span>
+            <div className="mx-auto max-w-5xl animate-fade-up">
+              {/* Title */}
+              <h1 className="text-2xl md:text-4xl font-bold tracking-tight mb-6 text-center">
+                Empower Your Mind & Body Through <span className="text-primary">Movement</span>
               </h1>
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Evidence-based workouts and nutrition advice designed for young people with mental health challenges.
-                Start your wellness journey today.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button asChild size="lg" className="text-lg h-12 px-8">
-                  <Link to="/quiz">
-                    <Play className="mr-2 h-5 w-5" />
-                    Take the Quiz
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="text-lg h-12 px-8">
-                  <Link to="/browse">
-                    <Search className="mr-2 h-5 w-5" />
-                    Browse Videos
-                  </Link>
-                </Button>
+              
+              {/* Video Embed */}
+              <div className="relative w-full mb-8" style={{ paddingBottom: '56.25%' }}>
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
+                  src="https://www.youtube.com/embed/KamOkV4r4g0?controls=1&rel=0&modestbranding=1"
+                  title="e-PHIT Mental Health Trailer"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+
+              {/* Description and CTAs */}
+              <div className="text-center">
+                <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+                  Evidence-based workouts and nutrition advice designed for young people with mental health challenges.
+                  Start your wellness journey today.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button asChild size="lg" className="text-lg h-12 px-8">
+                    <Link to="/quiz">
+                      <Play className="mr-2 h-5 w-5" />
+                      Take the Quiz
+                    </Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="text-lg h-12 px-8">
+                    <Link to="/browse">
+                      <Search className="mr-2 h-5 w-5" />
+                      Choose Your Moves
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -43,6 +58,40 @@ export default function Index() {
           {/* Decorative elements */}
           <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+        </section>
+
+        {/* Choose Your Moves Section */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container">
+            <div className="mx-auto max-w-3xl text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Choose Your Moves
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Select a category to explore our exercise and nutrition videos
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {[
+                { name: "Boxing Moves", icon: "🥊", category: "Boxing Moves" },
+                { name: "Yoga", icon: "🧘", category: "Yoga" },
+                { name: "Full Body Fitness", icon: "💪", category: "Full Body Fitness" },
+                { name: "Strength & Tone", icon: "🏋️", category: "Strength & Tone" },
+                { name: "Pilates", icon: "🤸", category: "Pilates" },
+                { name: "Nutrition", icon: "🥗", category: "Nutrition" },
+              ].map((item) => (
+                <Link key={item.category} to={`/browse?category=${encodeURIComponent(item.category)}`}>
+                  <Card className="border-2 hover:border-primary transition-all hover:shadow-lg cursor-pointer h-full">
+                    <CardContent className="pt-8 pb-8 text-center">
+                      <div className="text-5xl mb-4">{item.icon}</div>
+                      <h3 className="font-semibold text-xl">{item.name}</h3>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* What is e-PHIT Section */}

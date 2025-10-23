@@ -1,26 +1,56 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams, Link } from "react-router-dom";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { VideoCard } from "@/components/VideoCard";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { videos, Video, getCategories } from "@/lib/videoData";
+import { videos, Video } from "@/lib/videoData";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowLeft } from "lucide-react";
 
 export default function Browse() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [levelFilter, setLevelFilter] = useState<string>("all");
   const [timeFilter, setTimeFilter] = useState<string>("all");
 
-  const categories = useMemo(() => getCategories(), []);
+  // Read category from URL params
+  useEffect(() => {
+    const categoryParam = searchParams.get("category");
+    if (categoryParam) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [searchParams]);
+
+  const mainCategories = [
+    { name: "Boxing Moves", icon: "🥊", categories: ["Boxing Moves"] },
+    { name: "Yoga", icon: "🧘", categories: ["Yoga"] },
+    { name: "Full Body Fitness", icon: "💪", categories: ["Full Body Fitness"] },
+    { name: "Strength & Tone", icon: "🏋️", categories: ["Strength & Tone"] },
+    { name: "Pilates", icon: "🤸", categories: ["Pilates"] },
+    { name: "Nutrition", icon: "🥗", categories: ["Nutrition Advice", "Healthy Meals", "Nutrition Info"] },
+  ];
 
   const filteredVideos = useMemo(() => {
     let filtered = videos;
 
-    if (selectedCategory !== "all") {
-      filtered = filtered.filter(v => v.category.includes(selectedCategory));
+    if (selectedCategory) {
+      // Find the main category that matches
+      const mainCat = mainCategories.find(mc => 
+        mc.name === selectedCategory || mc.categories.includes(selectedCategory)
+      );
+      
+      if (mainCat) {
+        filtered = filtered.filter(v => 
+          mainCat.categories.some(cat => v.category.includes(cat))
+        );
+      } else {
+        // Direct category match
+        filtered = filtered.filter(v => v.category.includes(selectedCategory));
+      }
     }
 
     if (levelFilter !== "all") {
@@ -48,67 +78,71 @@ export default function Browse() {
       <main className="flex-1 py-12">
         <div className="container">
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">Browse Videos</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">Choose Your Moves</h1>
             <p className="text-lg text-muted-foreground">
-              Explore our full library of exercise and nutrition content
+              {selectedCategory ? `${selectedCategory} videos` : 'Select a category to explore our exercise and nutrition content'}
             </p>
           </div>
 
-          {/* Filters */}
-          <div className="flex flex-col md:flex-row gap-4 mb-8">
-            <Select value={levelFilter} onValueChange={setLevelFilter}>
-              <SelectTrigger className="w-full md:w-48">
-                <SelectValue placeholder="Filter by level" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Levels</SelectItem>
-                <SelectItem value="Skills">Skills</SelectItem>
-                <SelectItem value="Beginner">Beginner</SelectItem>
-                <SelectItem value="Medium">Intermediate</SelectItem>
-                <SelectItem value="Advanced">Advanced</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select value={timeFilter} onValueChange={setTimeFilter}>
-              <SelectTrigger className="w-full md:w-48">
-                <SelectValue placeholder="Filter by duration" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Durations</SelectItem>
-                <SelectItem value="short">Quick Clips (&lt; 1 min)</SelectItem>
-                <SelectItem value="5">Short (~5 mins)</SelectItem>
-                <SelectItem value="10">Medium (5-10 mins)</SelectItem>
-                <SelectItem value="15">Long (10+ mins)</SelectItem>
-              </SelectContent>
-            </Select>
-
-            {(levelFilter !== "all" || timeFilter !== "all") && (
+          {selectedCategory ? (
+            <>
+              {/* Back Button */}
               <Button
                 variant="outline"
                 onClick={() => {
+                  setSelectedCategory(null);
+                  setSearchParams({});
                   setLevelFilter("all");
                   setTimeFilter("all");
                 }}
+                className="mb-6"
               >
-                Clear Filters
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Back to Categories
               </Button>
-            )}
-          </div>
 
-          {/* Category Tabs */}
-          <Tabs value={selectedCategory} onValueChange={setSelectedCategory}>
-            <TabsList className="w-full justify-start overflow-x-auto flex-wrap h-auto gap-2 bg-transparent p-0 mb-8">
-              <TabsTrigger value="all" className="rounded-full">
-                All Videos
-              </TabsTrigger>
-              {categories.map(category => (
-                <TabsTrigger key={category} value={category} className="rounded-full">
-                  {category}
-                </TabsTrigger>
-              ))}
-            </TabsList>
+              {/* Filters */}
+              <div className="flex flex-col md:flex-row gap-4 mb-8">
+                <Select value={levelFilter} onValueChange={setLevelFilter}>
+                  <SelectTrigger className="w-full md:w-48">
+                    <SelectValue placeholder="Filter by level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Levels</SelectItem>
+                    <SelectItem value="Skills">Skills</SelectItem>
+                    <SelectItem value="Beginner">Beginner</SelectItem>
+                    <SelectItem value="Medium">Intermediate</SelectItem>
+                    <SelectItem value="Advanced">Advanced</SelectItem>
+                  </SelectContent>
+                </Select>
 
-            <TabsContent value={selectedCategory} className="mt-0">
+                <Select value={timeFilter} onValueChange={setTimeFilter}>
+                  <SelectTrigger className="w-full md:w-48">
+                    <SelectValue placeholder="Filter by duration" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Durations</SelectItem>
+                    <SelectItem value="short">Quick Clips (&lt; 1 min)</SelectItem>
+                    <SelectItem value="5">Short (~5 mins)</SelectItem>
+                    <SelectItem value="10">Medium (5-10 mins)</SelectItem>
+                    <SelectItem value="15">Long (10+ mins)</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                {(levelFilter !== "all" || timeFilter !== "all") && (
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setLevelFilter("all");
+                      setTimeFilter("all");
+                    }}
+                  >
+                    Clear Filters
+                  </Button>
+                )}
+              </div>
+
+              {/* Videos Grid */}
               {filteredVideos.length > 0 ? (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredVideos.map(video => (
@@ -129,15 +163,32 @@ export default function Browse() {
                     onClick={() => {
                       setLevelFilter("all");
                       setTimeFilter("all");
-                      setSelectedCategory("all");
                     }}
                   >
-                    Reset All Filters
+                    Clear Filters
                   </Button>
                 </div>
               )}
-            </TabsContent>
-          </Tabs>
+            </>
+          ) : (
+            /* Category Selection Grid */
+            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {mainCategories.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => setSelectedCategory(item.name)}
+                  className="text-left"
+                >
+                  <Card className="border-2 hover:border-primary transition-all hover:shadow-lg cursor-pointer h-full">
+                    <CardContent className="pt-8 pb-8 text-center">
+                      <div className="text-5xl mb-4">{item.icon}</div>
+                      <h3 className="font-semibold text-xl">{item.name}</h3>
+                    </CardContent>
+                  </Card>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </main>
       <Footer />
