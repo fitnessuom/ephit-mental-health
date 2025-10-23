@@ -6,7 +6,6 @@ import { VideoCard } from "@/components/VideoCard";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { Button } from "@/components/ui/button";
 import { videos, Video } from "@/lib/videoData";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
 
@@ -14,7 +13,6 @@ export default function Browse() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [levelFilter, setLevelFilter] = useState<string>("all");
   const [timeFilter, setTimeFilter] = useState<string>("all");
 
   // Read category from URL params
@@ -54,10 +52,6 @@ export default function Browse() {
       }
     }
 
-    if (levelFilter !== "all") {
-      filtered = filtered.filter(v => v.level === levelFilter);
-    }
-
     if (timeFilter !== "all") {
       if (timeFilter === "short") {
         filtered = filtered.filter(v => v.minutes === "Short");
@@ -71,7 +65,7 @@ export default function Browse() {
     }
 
     return filtered;
-  }, [selectedCategory, levelFilter, timeFilter]);
+  }, [selectedCategory, timeFilter]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -93,7 +87,6 @@ export default function Browse() {
                 onClick={() => {
                   setSelectedCategory(null);
                   setSearchParams({});
-                  setLevelFilter("all");
                   setTimeFilter("all");
                 }}
                 className="mb-6"
@@ -102,45 +95,38 @@ export default function Browse() {
                 Back to Categories
               </Button>
 
-              {/* Filters */}
-              <div className="flex flex-col md:flex-row gap-4 mb-8">
-                <Select value={levelFilter} onValueChange={setLevelFilter}>
-                  <SelectTrigger className="w-full md:w-48">
-                    <SelectValue placeholder="Filter by level" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Levels</SelectItem>
-                    <SelectItem value="Skills">Skills</SelectItem>
-                    <SelectItem value="Beginner">Beginner</SelectItem>
-                    <SelectItem value="Medium">Intermediate</SelectItem>
-                    <SelectItem value="Advanced">Advanced</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={timeFilter} onValueChange={setTimeFilter}>
-                  <SelectTrigger className="w-full md:w-48">
-                    <SelectValue placeholder="Filter by duration" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Durations</SelectItem>
-                    <SelectItem value="short">Quick Clips (&lt; 1 min)</SelectItem>
-                    <SelectItem value="5">Short (~5 mins)</SelectItem>
-                    <SelectItem value="10">Medium (5-10 mins)</SelectItem>
-                    <SelectItem value="15">Long (10+ mins)</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                {(levelFilter !== "all" || timeFilter !== "all") && (
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setLevelFilter("all");
-                      setTimeFilter("all");
-                    }}
-                  >
-                    Clear Filters
-                  </Button>
-                )}
+              {/* Time Filter Buttons */}
+              <div className="flex flex-wrap gap-2 mb-8">
+                <Button
+                  variant={timeFilter === "all" ? "default" : "outline"}
+                  onClick={() => setTimeFilter("all")}
+                >
+                  All Durations
+                </Button>
+                <Button
+                  variant={timeFilter === "short" ? "default" : "outline"}
+                  onClick={() => setTimeFilter("short")}
+                >
+                  Quick Clips (&lt;1 min)
+                </Button>
+                <Button
+                  variant={timeFilter === "5" ? "default" : "outline"}
+                  onClick={() => setTimeFilter("5")}
+                >
+                  Short (~5 mins)
+                </Button>
+                <Button
+                  variant={timeFilter === "10" ? "default" : "outline"}
+                  onClick={() => setTimeFilter("10")}
+                >
+                  Medium (5-10 mins)
+                </Button>
+                <Button
+                  variant={timeFilter === "15" ? "default" : "outline"}
+                  onClick={() => setTimeFilter("15")}
+                >
+                  Long (10+ mins)
+                </Button>
               </div>
 
               {/* Videos Grid */}
@@ -161,10 +147,7 @@ export default function Browse() {
                   </p>
                   <Button
                     variant="outline"
-                    onClick={() => {
-                      setLevelFilter("all");
-                      setTimeFilter("all");
-                    }}
+                    onClick={() => setTimeFilter("all")}
                   >
                     Clear Filters
                   </Button>

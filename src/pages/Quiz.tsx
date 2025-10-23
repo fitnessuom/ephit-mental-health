@@ -28,7 +28,7 @@ export default function Quiz() {
   }, []);
 
   const options = getAvailableOptions(quiz.answers);
-  const totalSteps = 4;
+  const totalSteps = 3;
   const progress = ((quiz.step + 1) / totalSteps) * 100;
 
   const handleNext = () => {
@@ -139,17 +139,6 @@ export default function Quiz() {
         { value: "~5mins", label: "Short Session (~5 mins)", available: options.times.includes("~5mins") },
         { value: "5-10mins", label: "Medium Session (5-10 mins)", available: options.times.includes("5-10mins") },
         { value: "~15mins", label: "Full Workout (12-20 mins)", available: options.times.includes("~15mins") },
-      ].filter(o => o.available),
-    },
-    {
-      id: "level",
-      title: "What's your experience level?",
-      description: "Help us match you with the right difficulty",
-      options: [
-        { value: "Skills", label: "Just Learning", available: options.levels.includes("Skills") },
-        { value: "Beginner", label: "Beginner", available: options.levels.includes("Beginner") },
-        { value: "Medium", label: "Intermediate", available: options.levels.includes("Medium") },
-        { value: "Advanced", label: "Advanced", available: options.levels.includes("Advanced") },
       ].filter(o => o.available),
     },
   ];
