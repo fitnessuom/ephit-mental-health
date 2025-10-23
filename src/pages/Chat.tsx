@@ -8,9 +8,9 @@ export default function Chat() {
       <Header />
       <main className="flex-1 container py-8">
         <div className="mb-6 text-center">
-          <h1 className="text-4xl font-bold mb-2">AI Video Assistant</h1>
+          <h1 className="text-4xl font-bold mb-2">ePhit Coach</h1>
           <p className="text-muted-foreground">
-            Tell me what you're looking for and I'll suggest the perfect videos for you
+            Your personal health coach here to help you achieve your ideal day, every day—one step at a time
           </p>
         </div>
         <VideoSuggestionsChat />

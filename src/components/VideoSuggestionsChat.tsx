@@ -16,7 +16,7 @@ export function VideoSuggestionsChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! I'm here to help you find the perfect workout or nutrition video. Tell me what you're looking for - maybe how you're feeling, how much time you have, or what type of exercise interests you?"
+      content: "Hi, I'm ePhit Coach—your personal health coach here to help you achieve your ideal day, every day—one step at a time."
     }
   ]);
   const [input, setInput] = useState("");
@@ -174,7 +174,7 @@ export function VideoSuggestionsChat() {
               <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                 <Sparkles className="w-4 h-4 text-primary" />
               </div>
-              <span className="text-sm font-medium text-foreground/70">AI Assistant</span>
+              <span className="text-sm font-medium text-foreground/70">ePhit Coach</span>
             </div>
           )}
           
