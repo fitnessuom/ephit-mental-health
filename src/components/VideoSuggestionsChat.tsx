@@ -26,14 +26,26 @@ export function VideoSuggestionsChat() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const prevMessagesLengthRef = useRef(messages.length);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const isNearBottom = () => {
+    const container = scrollContainerRef.current;
+    if (!container) return true;
+    
+    const threshold = 150; // pixels from bottom
+    const position = container.scrollTop + container.clientHeight;
+    const height = container.scrollHeight;
+    
+    return height - position < threshold;
+  };
+
   useEffect(() => {
-    // Only scroll if a new message was added, not on every update
-    if (messages.length > prevMessagesLengthRef.current) {
+    // Only scroll if a new message was added AND user is already near the bottom
+    if (messages.length > prevMessagesLengthRef.current && isNearBottom()) {
       scrollToBottom();
     }
     prevMessagesLengthRef.current = messages.length;
@@ -218,7 +230,7 @@ export function VideoSuggestionsChat() {
     <>
       <div className="flex flex-col h-[calc(100vh-8rem)] max-w-4xl mx-auto">
         <Card className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+          <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-6 space-y-4">
             {messages.map((message, index) => renderMessage(message, index))}
             
             {isLoading && (
