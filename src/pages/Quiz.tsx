@@ -120,9 +120,14 @@ export default function Quiz() {
         ? [
             { value: "Boxing Moves", label: "Boxing Moves", available: options.types.includes("Boxing Moves") },
             { value: "Yoga", label: "Yoga", available: options.types.includes("Yoga") },
+            { value: "Full Body Fitness", label: "Full Body Fitness", available: options.types.includes("Full Body Fitness") },
+            { value: "Strength & Tone", label: "Strength & Tone", available: options.types.includes("Strength & Tone") },
+            { value: "Pilates", label: "Pilates", available: options.types.includes("Pilates") },
           ].filter(o => o.available)
         : [
-            { value: "Healthy Meals Advice", label: "Healthy Meals Advice", available: options.types.includes("Healthy Meals Advice") },
+            { value: "Nutrition Advice", label: "Nutrition Advice", available: options.types.includes("Nutrition Advice") },
+            { value: "Healthy Meals", label: "Healthy Meals", available: options.types.includes("Healthy Meals") },
+            { value: "Nutrition Info", label: "Nutrition Info", available: options.types.includes("Nutrition Info") },
           ].filter(o => o.available),
     },
     {
@@ -130,10 +135,10 @@ export default function Quiz() {
       title: "How much time do you have?",
       description: "Choose a duration that fits your schedule",
       options: [
-        { value: "1 min!", label: "Quick Clip (1 min)", available: options.times.includes("1 min!") },
+        { value: "1 min!", label: "Quick Clip (1-2 mins)", available: options.times.includes("1 min!") },
         { value: "~5mins", label: "Short Session (~5 mins)", available: options.times.includes("~5mins") },
         { value: "5-10mins", label: "Medium Session (5-10 mins)", available: options.times.includes("5-10mins") },
-        { value: "~15mins", label: "Full Workout (~15 mins)", available: options.times.includes("~15mins") },
+        { value: "~15mins", label: "Full Workout (12-20 mins)", available: options.times.includes("~15mins") },
       ].filter(o => o.available),
     },
     {
