@@ -25,12 +25,18 @@ export function VideoSuggestionsChat() {
   const [videoPlayerOpen, setVideoPlayerOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const prevMessagesLengthRef = useRef(messages.length);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Only scroll if a new message was added, not on every update
+    if (messages.length > prevMessagesLengthRef.current) {
+      scrollToBottom();
+    }
+    prevMessagesLengthRef.current = messages.length;
   }, [messages]);
 
   const extractVideoIds = (text: string): string[] => {
