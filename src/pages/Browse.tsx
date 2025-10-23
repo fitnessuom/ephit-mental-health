@@ -44,12 +44,13 @@ export default function Browse() {
       );
       
       if (mainCat) {
+        // Filter by q1_1 field which contains the decision tree categories
         filtered = filtered.filter(v => 
-          mainCat.categories.some(cat => v.category.includes(cat))
+          mainCat.categories.some(cat => v.q1_1 === cat)
         );
       } else {
-        // Direct category match
-        filtered = filtered.filter(v => v.category.includes(selectedCategory));
+        // Direct category match using q1_1
+        filtered = filtered.filter(v => v.q1_1 === selectedCategory);
       }
     }
 
