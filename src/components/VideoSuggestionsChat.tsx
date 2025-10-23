@@ -35,11 +35,21 @@ export function VideoSuggestionsChat() {
 
   const extractVideoIds = (text: string): string[] => {
     const videoIds: string[] = [];
-    videos.forEach(video => {
-      if (text.toLowerCase().includes(video.name.toLowerCase())) {
-        videoIds.push(video.id);
+    const lowerText = text.toLowerCase();
+    
+    // Sort videos by name length (longest first) to match more specific names first
+    const sortedVideos = [...videos].sort((a, b) => b.name.length - a.name.length);
+    
+    sortedVideos.forEach(video => {
+      const videoNameLower = video.name.toLowerCase();
+      // Check if the video name appears in the text (with word boundaries for better matching)
+      if (lowerText.includes(videoNameLower)) {
+        if (!videoIds.includes(video.id)) {
+          videoIds.push(video.id);
+        }
       }
     });
+    
     return videoIds;
   };
 
