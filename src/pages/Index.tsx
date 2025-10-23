@@ -74,7 +74,7 @@ export default function Index() {
 
             <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {[
-                { name: "Boxing Moves", icon: "🥊", category: "Boxing Moves" },
+                { name: "Boxing", icon: "🥊", category: "Boxing" },
                 { name: "Yoga", icon: "🧘", category: "Yoga" },
                 { name: "Full Body Fitness", icon: "💪", category: "Full Body Fitness" },
                 { name: "Strength & Tone", icon: "🏋️", category: "Strength & Tone" },

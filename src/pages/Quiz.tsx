@@ -118,7 +118,7 @@ export default function Quiz() {
       description: "Select your preferred activity style",
       options: quiz.answers.priority === "Fitness" 
         ? [
-            { value: "Boxing Moves", label: "Boxing Moves", available: options.types.includes("Boxing Moves") },
+            { value: "Boxing", label: "Boxing", available: options.types.includes("Boxing") },
             { value: "Yoga", label: "Yoga", available: options.types.includes("Yoga") },
             { value: "Full Body Fitness", label: "Full Body Fitness", available: options.types.includes("Full Body Fitness") },
             { value: "Strength & Tone", label: "Strength & Tone", available: options.types.includes("Strength & Tone") },

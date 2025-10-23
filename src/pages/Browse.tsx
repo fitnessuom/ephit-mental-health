@@ -26,7 +26,7 @@ export default function Browse() {
   }, [searchParams]);
 
   const mainCategories = [
-    { name: "Boxing Moves", icon: "🥊", categories: ["Boxing Moves"] },
+    { name: "Boxing", icon: "🥊", categories: ["Boxing"] },
     { name: "Yoga", icon: "🧘", categories: ["Yoga"] },
     { name: "Full Body Fitness", icon: "💪", categories: ["Full Body Fitness"] },
     { name: "Strength & Tone", icon: "🏋️", categories: ["Strength & Tone"] },
