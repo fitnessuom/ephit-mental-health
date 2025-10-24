@@ -58,7 +58,7 @@ export function Footer() {
         <div className="mt-8 pt-6 border-t border-border">
           <div className="text-sm text-muted-foreground space-y-2">
             <p className="font-medium">
-              © {new Date().getFullYear()} University of Manchester. All rights reserved.
+              © {new Date().getFullYear()} ephit-mental-health demo. All rights reserved.
             </p>
             <p className="text-xs max-w-3xl">
               <strong>Disclaimer:</strong> The content provided here is for informational purposes 
