@@ -60,8 +60,6 @@ export function VideoSuggestionsChat() {
       .replace(/\[|\]/g, '') // Remove brackets
       .replace(/\(.*?\)/g, ''); // Remove content in parentheses like (5min)
     
-    console.log('Extracting videos from text:', cleanText);
-    
     // Sort videos by name length (longest first) to match more specific names first
     const sortedVideos = [...videos].sort((a, b) => b.name.length - a.name.length);
     
@@ -70,13 +68,11 @@ export function VideoSuggestionsChat() {
       // Check if the video name appears in the cleaned text
       if (cleanText.includes(videoNameLower)) {
         if (!videoIds.includes(video.id)) {
-          console.log('Found video match:', video.name);
           videoIds.push(video.id);
         }
       }
     });
     
-    console.log('Extracted video IDs:', videoIds);
     return videoIds;
   };
 

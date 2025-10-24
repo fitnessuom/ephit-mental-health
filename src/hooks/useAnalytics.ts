@@ -28,9 +28,10 @@ export function useAnalytics() {
       }
       
       localStorage.setItem("ephit-analytics", JSON.stringify(events));
-      console.log("Analytics event tracked:", event);
     } catch (error) {
-      console.error("Failed to track analytics:", error);
+      if (import.meta.env.DEV) {
+        console.error("Failed to track analytics:", error);
+      }
     }
   }, []);
 
