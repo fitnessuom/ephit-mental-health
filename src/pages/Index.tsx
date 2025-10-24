@@ -16,9 +16,15 @@ export default function Index() {
           <div className="container relative z-10">
             <div className="mx-auto max-w-5xl animate-fade-up">
               {/* Title */}
-              <h1 className="text-2xl md:text-4xl font-bold tracking-tight mb-6 text-center">
-                Empower Your Mind & Body Through <span className="text-primary">Movement</span>
-              </h1>
+              <div className="text-center mb-6">
+                <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-3">
+                  <span className="text-[#6B5B95]">e-PHIT</span>{" "}
+                  <span className="text-[#F4C542]">MENTAL HEALTH</span>
+                </h1>
+                <p className="text-lg md:text-xl text-muted-foreground">
+                  Co-designed by young people living with mental health
+                </p>
+              </div>
               
               {/* Video Embed */}
               <div className="relative w-full mb-8" style={{ paddingBottom: '56.25%' }}>
@@ -41,7 +47,7 @@ export default function Index() {
                   <Button asChild size="lg" className="text-lg h-12 px-8">
                     <Link to="/quiz">
                       <Play className="mr-2 h-5 w-5" />
-                      Take the Quiz
+                      Find Your First Video
                     </Link>
                   </Button>
                   <Button asChild size="lg" variant="outline" className="text-lg h-12 px-8">
