@@ -16,10 +16,10 @@ export const KettlebellMarker: FC<MarkerProps> = ({ label, onClick, visited, isE
         absolute transform -translate-x-1/2 -translate-y-1/2
         flex items-center justify-center
         transition-all duration-200
+        w-10 h-10 md:w-20 md:h-20
         ${isError ? 'animate-shake' : ''}
         ${visited ? 'hover:scale-105' : 'hover:scale-110'}
       `}
-      style={{ width: '80px', height: '80px' }}
     >
       <div className="relative w-full h-full flex items-center justify-center">
         {/* Kettlebell outline */}
@@ -41,7 +41,7 @@ export const KettlebellMarker: FC<MarkerProps> = ({ label, onClick, visited, isE
         />
         
         {/* Label */}
-        <span className={`relative z-10 text-lg font-bold ${visited ? 'text-primary' : 'text-foreground'}`}>
+        <span className={`relative z-10 text-sm md:text-lg font-bold ${visited ? 'text-primary' : 'text-foreground'}`}>
           {label}
         </span>
       </div>

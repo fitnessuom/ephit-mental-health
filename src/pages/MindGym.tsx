@@ -23,7 +23,7 @@ export default function MindGym() {
         </div>
 
         <Tabs defaultValue="tmt-a" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-6">
+          <TabsList className="grid w-full grid-cols-1 md:grid-cols-4 mb-6">
             <TabsTrigger value="tmt-a">Kettlebell Circuit A</TabsTrigger>
             <TabsTrigger value="tmt-b">Kettlebell Circuit B</TabsTrigger>
             <TabsTrigger value="hanoi">Weight Stack Challenge</TabsTrigger>
