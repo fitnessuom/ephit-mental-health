@@ -95,7 +95,8 @@ export const TowersOfHanoi: React.FC<TowersProps> = ({ discCount = 3 }) => {
             <div className="relative flex flex-col-reverse items-center gap-1 pt-2 pb-4">
               {peg.map((disc, idx) => {
                 const isSelected = selected?.disc === disc && selected?.peg === pegIndex;
-                const width = 60 + disc * 30;
+                const width = 80 + disc * 40;
+                const plateSize = 24 + disc * 8;
                 
                 return (
                   <div
@@ -105,17 +106,47 @@ export const TowersOfHanoi: React.FC<TowersProps> = ({ discCount = 3 }) => {
                       handleDiscClick(pegIndex);
                     }}
                     className={`
-                      relative h-8 rounded-full flex items-center justify-between
+                      relative flex items-center justify-between
                       transition-all duration-200 cursor-pointer
-                      ${isSelected ? 'ring-4 ring-primary ring-offset-2' : 'hover:brightness-110'}
+                      ${isSelected ? 'ring-4 ring-primary ring-offset-2 rounded-lg' : 'hover:brightness-110'}
                     `}
                     style={{
                       width: `${width}px`,
-                      backgroundColor: discColors[disc % discColors.length],
+                      height: '32px',
                     }}
                   >
-                    <div className="w-3 h-3 rounded-full bg-background border-2 border-current ml-1" />
-                    <div className="w-3 h-3 rounded-full bg-background border-2 border-current mr-1" />
+                    {/* Left weight plate */}
+                    <div 
+                      className="rounded-full flex items-center justify-center font-bold text-white shadow-lg"
+                      style={{
+                        width: `${plateSize}px`,
+                        height: `${plateSize}px`,
+                        backgroundColor: discColors[disc % discColors.length],
+                      }}
+                    >
+                      <div className="w-2 h-2 rounded-full bg-white/30" />
+                    </div>
+                    
+                    {/* Bar */}
+                    <div 
+                      className="flex-1 h-3 mx-1"
+                      style={{
+                        backgroundColor: discColors[disc % discColors.length],
+                        filter: 'brightness(1.2)',
+                      }}
+                    />
+                    
+                    {/* Right weight plate */}
+                    <div 
+                      className="rounded-full flex items-center justify-center font-bold text-white shadow-lg"
+                      style={{
+                        width: `${plateSize}px`,
+                        height: `${plateSize}px`,
+                        backgroundColor: discColors[disc % discColors.length],
+                      }}
+                    >
+                      <div className="w-2 h-2 rounded-full bg-white/30" />
+                    </div>
                   </div>
                 );
               })}

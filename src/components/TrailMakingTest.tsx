@@ -33,7 +33,7 @@ export const TrailMakingTest: React.FC<TrailMakingTestProps> = ({ mode }) => {
   const [startTime, setStartTime] = useState<number | null>(null);
   const [endTime, setEndTime] = useState<number | null>(null);
   const [errorLabel, setErrorLabel] = useState<string | null>(null);
-  const [isStarted, setIsStarted] = useState(false);
+  const [isStarted, setIsStarted] = useState(true);
 
   useEffect(() => {
     generatePositions();
@@ -68,7 +68,6 @@ export const TrailMakingTest: React.FC<TrailMakingTestProps> = ({ mode }) => {
   };
 
   const handleStart = () => {
-    setIsStarted(true);
     setStartTime(null);
     setEndTime(null);
     setCurrentIndex(0);
@@ -99,8 +98,8 @@ export const TrailMakingTest: React.FC<TrailMakingTestProps> = ({ mode }) => {
   const totalTime = startTime && endTime ? ((endTime - startTime) / 1000).toFixed(2) : null;
 
   const handleRetry = () => {
-    setIsStarted(false);
     setEndTime(null);
+    handleStart();
   };
 
   return (
@@ -114,30 +113,30 @@ export const TrailMakingTest: React.FC<TrailMakingTestProps> = ({ mode }) => {
             ? 'Connect the numbers in order from 1 to 25 as quickly as possible.'
             : 'Alternate between numbers and letters: 1-A-2-B-3-C and so on.'}
         </p>
-        {!isStarted && (
-          <Button onClick={handleStart}>Start Test</Button>
-        )}
-        {isStarted && !endTime && (
-          <p className="text-sm text-muted-foreground">
-            Next: <span className="font-bold text-primary">{sequence[currentIndex]}</span>
-          </p>
-        )}
+        <div className="flex gap-4 items-center">
+          {!endTime && (
+            <p className="text-sm text-muted-foreground">
+              Next: <span className="font-bold text-primary text-lg">{sequence[currentIndex]}</span>
+            </p>
+          )}
+          <Button onClick={handleStart} variant="outline" size="sm">
+            {currentIndex > 0 ? 'Restart' : 'Reset'}
+          </Button>
+        </div>
       </Card>
 
-      {isStarted && (
-        <div className="relative flex-1 min-h-[500px] bg-card rounded-lg border">
-          {positions.map(({ label, x, y }) => (
-            <div key={label} style={{ left: `${x}%`, top: `${y}%` }}>
-              <KettlebellMarker
-                label={label}
-                onClick={() => handleClick(label)}
-                visited={sequence.indexOf(label) < currentIndex}
-                isError={errorLabel === label}
-              />
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="relative flex-1 min-h-[500px] bg-card rounded-lg border">
+        {positions.map(({ label, x, y }) => (
+          <div key={label} style={{ left: `${x}%`, top: `${y}%` }}>
+            <KettlebellMarker
+              label={label}
+              onClick={() => handleClick(label)}
+              visited={sequence.indexOf(label) < currentIndex}
+              isError={errorLabel === label}
+            />
+          </div>
+        ))}
+      </div>
 
       <Dialog open={!!totalTime} onOpenChange={handleRetry}>
         <DialogContent>
