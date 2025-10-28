@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import kettlebellIcon from '@/assets/kettlebell.png';
 
 interface MarkerProps {
   label: string;
@@ -18,39 +19,31 @@ export const KettlebellMarker: FC<MarkerProps> = ({ label, onClick, visited, isE
         ${isError ? 'animate-shake' : ''}
         ${visited ? 'hover:scale-105' : 'hover:scale-110'}
       `}
-      style={{ width: '64px', height: '64px' }}
+      style={{ width: '80px', height: '80px' }}
     >
-      {/* Kettlebell shape */}
-      <div className="relative w-full h-full flex flex-col items-center justify-end">
-        {/* Handle */}
-        <div 
+      <div className="relative w-full h-full flex items-center justify-center">
+        {/* Kettlebell outline */}
+        <img 
+          src={kettlebellIcon} 
+          alt="" 
           className={`
-            absolute top-0 left-1/2 -translate-x-1/2
-            w-6 h-5 rounded-t-lg border-2 transition-colors
-            ${visited 
-              ? 'bg-primary/20 border-primary' 
-              : 'bg-card border-border'
-            }
-            ${isError ? 'border-destructive' : ''}
+            absolute inset-0 w-full h-full object-contain transition-all
+            ${visited ? 'brightness-0 saturate-100' : 'opacity-70'}
+            ${isError ? 'brightness-0 saturate-100 hue-rotate-[320deg]' : ''}
           `}
+          style={{
+            filter: visited 
+              ? 'brightness(0) saturate(100%) invert(42%) sepia(93%) saturate(1352%) hue-rotate(187deg) brightness(99%) contrast(119%)'
+              : isError 
+                ? 'brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%)'
+                : undefined
+          }}
         />
         
-        {/* Bell body */}
-        <div 
-          className={`
-            w-14 h-14 rounded-full border-2 transition-colors
-            flex items-center justify-center
-            ${visited 
-              ? 'bg-primary/20 border-primary' 
-              : 'bg-card border-border'
-            }
-            ${isError ? 'border-destructive' : ''}
-          `}
-        >
-          <span className={`text-sm font-bold ${visited ? 'text-primary' : 'text-foreground'}`}>
-            {label}
-          </span>
-        </div>
+        {/* Label */}
+        <span className={`relative z-10 text-lg font-bold ${visited ? 'text-primary' : 'text-foreground'}`}>
+          {label}
+        </span>
       </div>
     </button>
   );
