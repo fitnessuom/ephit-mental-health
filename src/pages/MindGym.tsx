@@ -23,11 +23,11 @@ export default function MindGym() {
         </div>
 
         <Tabs defaultValue="tmt-a" className="w-full">
-          <TabsList className="grid w-full grid-cols-1 md:grid-cols-4 mb-6">
-            <TabsTrigger value="tmt-a">Kettlebell Circuit A</TabsTrigger>
-            <TabsTrigger value="tmt-b">Kettlebell Circuit B</TabsTrigger>
-            <TabsTrigger value="hanoi">Weight Stack Challenge</TabsTrigger>
-            <TabsTrigger value="recall">Rep Memory Test</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-1 md:grid-cols-4 mb-6 h-auto md:h-10 gap-2 md:gap-0 p-2 md:p-1">
+            <TabsTrigger value="tmt-a" className="whitespace-normal md:whitespace-nowrap py-2 md:py-1.5">Kettlebell Circuit A</TabsTrigger>
+            <TabsTrigger value="tmt-b" className="whitespace-normal md:whitespace-nowrap py-2 md:py-1.5">Kettlebell Circuit B</TabsTrigger>
+            <TabsTrigger value="hanoi" className="whitespace-normal md:whitespace-nowrap py-2 md:py-1.5">Weight Stack Challenge</TabsTrigger>
+            <TabsTrigger value="recall" className="whitespace-normal md:whitespace-nowrap py-2 md:py-1.5">Rep Memory Test</TabsTrigger>
           </TabsList>
           
           <TabsContent value="tmt-a" className="min-h-[600px]">
