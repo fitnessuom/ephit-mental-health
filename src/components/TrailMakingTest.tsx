@@ -127,7 +127,7 @@ export const TrailMakingTest: React.FC<TrailMakingTestProps> = ({ mode }) => {
 
       <div className="relative flex-1 min-h-[500px] bg-card rounded-lg border">
         {positions.map(({ label, x, y }) => (
-          <div key={label} style={{ left: `${x}%`, top: `${y}%` }}>
+          <div key={label} className="absolute" style={{ left: `${x}%`, top: `${y}%` }}>
             <KettlebellMarker
               label={label}
               onClick={() => handleClick(label)}
