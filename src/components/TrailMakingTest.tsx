@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { KettlebellMarker } from './KettlebellMarker';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
@@ -34,30 +34,51 @@ export const TrailMakingTest: React.FC<TrailMakingTestProps> = ({ mode }) => {
   const [endTime, setEndTime] = useState<number | null>(null);
   const [errorLabel, setErrorLabel] = useState<string | null>(null);
   const [isStarted, setIsStarted] = useState(true);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const update = () => {
+      const el = containerRef.current;
+      if (el) setContainerSize({ width: el.clientWidth, height: el.clientHeight });
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   useEffect(() => {
     generatePositions();
-  }, [mode]);
+  }, [mode, containerSize.width, containerSize.height]);
 
   const generatePositions = () => {
+    const { width, height } = containerSize;
+    if (!width || !height) return;
+
     const newPositions: Position[] = [];
-    const minDistance = 15;
+    const markerSize = 64; // px (w-16 h-16)
+    const padding = markerSize / 2 + 8; // keep fully visible
+    let minDistance = markerSize + 8; // prevent overlap with a small gap
     
     for (const label of sequence) {
       let attempts = 0;
-      let validPosition = false;
+      let placed = false;
       let x = 0, y = 0;
       
-      while (!validPosition && attempts < 100) {
-        x = Math.random() * 75 + 10;
-        y = Math.random() * 75 + 10;
+      while (!placed && attempts < 1000) {
+        x = Math.random() * (width - padding * 2) + padding;
+        y = Math.random() * (height - padding * 2) + padding;
         
-        validPosition = newPositions.every(pos => {
+        placed = newPositions.every(pos => {
           const dx = pos.x - x;
           const dy = pos.y - y;
-          return Math.sqrt(dx * dx + dy * dy) > minDistance;
+          return Math.hypot(dx, dy) > minDistance;
         });
         
+        if (!placed && attempts > 0 && attempts % 200 === 0) {
+          // Gradually relax the distance to guarantee placement
+          minDistance = Math.max(markerSize * 0.75, minDistance - 6);
+        }
         attempts++;
       }
       
@@ -125,9 +146,9 @@ export const TrailMakingTest: React.FC<TrailMakingTestProps> = ({ mode }) => {
         </div>
       </Card>
 
-      <div className="relative flex-1 min-h-[500px] bg-card rounded-lg border">
+      <div ref={containerRef} className="relative flex-1 min-h-[500px] bg-card rounded-lg border">
         {positions.map(({ label, x, y }) => (
-          <div key={label} className="absolute" style={{ left: `${x}%`, top: `${y}%` }}>
+          <div key={label} className="absolute" style={{ left: x, top: y }}>
             <KettlebellMarker
               label={label}
               onClick={() => handleClick(label)}
