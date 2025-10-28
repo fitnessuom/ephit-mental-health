@@ -24,10 +24,10 @@ export default function MindGym() {
 
         <Tabs defaultValue="tmt-a" className="w-full">
           <TabsList className="grid w-full grid-cols-4 mb-6">
-            <TabsTrigger value="tmt-a">Trail Making A</TabsTrigger>
-            <TabsTrigger value="tmt-b">Trail Making B</TabsTrigger>
-            <TabsTrigger value="hanoi">Tower of Hanoi</TabsTrigger>
-            <TabsTrigger value="recall">Verbal Recall</TabsTrigger>
+            <TabsTrigger value="tmt-a">Kettlebell Circuit A</TabsTrigger>
+            <TabsTrigger value="tmt-b">Kettlebell Circuit B</TabsTrigger>
+            <TabsTrigger value="hanoi">Weight Stack Challenge</TabsTrigger>
+            <TabsTrigger value="recall">Rep Memory Test</TabsTrigger>
           </TabsList>
           
           <TabsContent value="tmt-a" className="min-h-[600px]">
