@@ -10,6 +10,7 @@ import Browse from "./pages/Browse";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Chat from "./pages/Chat";
+import MindGym from "./pages/MindGym";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/browse" element={<Browse />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/mind-gym" element={<MindGym />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
