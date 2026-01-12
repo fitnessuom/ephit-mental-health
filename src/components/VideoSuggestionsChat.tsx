@@ -226,6 +226,20 @@ export function VideoSuggestionsChat() {
     <>
       <div className="flex flex-col h-[calc(100vh-8rem)] max-w-4xl mx-auto">
         <Card className="flex-1 flex flex-col overflow-hidden">
+          {/* Research disclaimer banner */}
+          <div className="bg-muted/50 border-b border-border/50 px-4 py-2">
+            <p className="text-xs text-muted-foreground text-center">
+              ⚠️ This chatbot is for research demonstration only—not clinical advice.{" "}
+              Feedback welcome at{" "}
+              <a 
+                href="mailto:e-phit@manchester.ac.uk" 
+                className="text-primary hover:underline"
+              >
+                e-phit@manchester.ac.uk
+              </a>
+            </p>
+          </div>
+          
           <div ref={scrollContainerRef} className="flex-1 overflow-y-auto p-6 space-y-4">
             {messages.map((message, index) => renderMessage(message, index))}
             
