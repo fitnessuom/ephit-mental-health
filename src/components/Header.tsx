@@ -12,12 +12,10 @@ import uomLogo from "@/assets/uom-logo.png";
 export function Header() {
   const navLinks = [
     { to: "/", label: "Home" },
-    { to: "/quiz", label: "Take Quiz" },
-    { to: "/browse", label: "Choose Your Moves" },
-    { to: "/mind-gym", label: "Mind Gym" },
-    { to: "/chat", label: "ePhit Coach" },
+    { to: "/quiz", label: "Take quiz" },
+    { to: "/browse", label: "Choose your moves" },
+    { to: "/chat", label: "ePhit coach" },
     { to: "/about", label: "About" },
-    { to: "/contact", label: "Contact" },
   ];
 
   return (
