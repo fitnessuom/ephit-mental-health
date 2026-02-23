@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="bg-foreground text-background mt-20">
+    <footer className="bg-foreground text-background">
       <div className="container py-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Contact Us */}
