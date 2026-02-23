@@ -7,6 +7,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import logo from "@/assets/logo.png";
+import uomLogo from "@/assets/uom-logo.png";
 
 export function Header() {
   const navLinks = [
@@ -23,10 +24,10 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         {/* Logo - on LEFT */}
-        <Link to="/" className="flex items-center space-x-3">
+        <Link to="/" className="flex items-center space-x-2">
           <img 
-            src={logo} 
-            alt="e-PHIT Mental Health Logo" 
+            src={uomLogo} 
+            alt="University of Manchester and e-PHIT logos" 
             className="h-12 w-auto"
           />
         </Link>
